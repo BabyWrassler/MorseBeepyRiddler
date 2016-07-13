@@ -81,7 +81,7 @@ char c;
 byte mlen;
 byte iii;
 byte messageCounter = 0;
-volatile long sleepCounter = 1L;
+//volatile long sleepCounter = 1L;
 byte riddlePosition = 0;
 int addr = 0;
 
@@ -89,8 +89,7 @@ MorseTranslator morseTranslator;
 
 ISR(WDT_vect)
 {
-  //sleep_disable();
-  sleepCounter++;
+//  sleepCounter++;
   //sleep_enable();
 }
 
@@ -126,7 +125,6 @@ void putPlace()
 {
   //Write value
   EEPROM.put(addr, riddlePosition);
-
 }
 
 void getPlace()
@@ -160,11 +158,12 @@ void setup()
   /* Enable the WD interrupt (note no reset). */
   WDTCR |= _BV(WDIE);
 
+  // Turn on LED to let us know the battery was connected right
   digitalWrite(0,HIGH);
   delay(1000);
   digitalWrite(0,LOW);
 
-  getPlace();
+  getPlace(); // Get index of next riddle to play from EEPROM
   if(riddlePosition > 30)
   {
     riddlePosition = 0;
@@ -180,9 +179,9 @@ void loop()
     playMessage(32); // "congrats, you're done"
     riddlePosition = 0; // Start over
   }
-  playMessage(riddlePosition); // next unplayed riddle
+  playMessage(riddlePosition); // play next unplayed riddle
   riddlePosition++;
-  putPlace();
+  putPlace(); // Record position in EEPROM to persist past power-down
   enterSleep();
   enterSleep();
 }

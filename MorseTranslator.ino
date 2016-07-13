@@ -1,6 +1,6 @@
 #define TONE_DIVISOR 239
 #define TONE_OCTAVE 6 
-#define MORSE_UNIT 250 // 250 is 5wpm, 125 is 10wpm, 62 is 20wpm
+#define MORSE_UNIT 125 // 250 is 5wpm, 125 is 10wpm, 62 is 20wpm
 #define LED_PIN 0
 
 MorseTranslator::MorseTranslator()
@@ -36,12 +36,12 @@ void MorseTranslator::dash()
 
 void MorseTranslator::endLetter()
 {
-    delay(3 * MORSE_UNIT); // the space between letters is 3 morse units of silence
+    delay(15 * MORSE_UNIT); // the space between letters is 3 morse units of silence
 }
 
 void MorseTranslator::space()
 {
-    delay(7 * MORSE_UNIT); // the space between words is 7 morse units of silence
+    delay(35 * MORSE_UNIT); // the space between words is 7 morse units of silence
 }
 
 void MorseTranslator::emit(char c)
