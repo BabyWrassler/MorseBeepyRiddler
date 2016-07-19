@@ -182,6 +182,8 @@ void loop()
   playMessage(riddlePosition); // play next unplayed riddle
   riddlePosition++;
   putPlace(); // Record position in EEPROM to persist past power-down
+  delay(500);
+  morseTranslator.tinyTone(239,3,2000); // Play low pitch sound to signal end
   enterSleep();
   enterSleep();
 }
